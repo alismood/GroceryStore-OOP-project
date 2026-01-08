@@ -23,7 +23,6 @@ public class Sale {
         this.items = new ArrayList<>();
     }
 
-    // Setters with validation
     public void setSaleId(int saleId) { this.saleId = Math.max(saleId, 0); }
     public void setCustomerName(String name) {
         if (name != null && !name.trim().isEmpty()) this.customerName = name;
@@ -33,10 +32,10 @@ public class Sale {
         if (date != null && !date.trim().isEmpty()) this.date = date;
     }
 
-    public void addItem(Product product) {
-        if (product.isInStock()) items.add(product);
-        else System.out.println("Item out of stock!");
-    }
+//    public void addItem(Product product) {
+//        if (product.isInStock()) items.add(product);
+//        else System.out.println("Item out of stock!");
+//    }
 
     public double calculateTotal() {
         double total = 0;

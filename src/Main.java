@@ -2,88 +2,105 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<Product> products = new ArrayList<>();
-    private static ArrayList<Customer> customers = new ArrayList<>();
+
+    private static ArrayList<Product> inventory = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        products.add(new Product(1, "Apple", 2.0, 50));
-        products.add(new Product(2, "Candy", 5.0, 10));
-        customers.add(new Customer(101, "Ali", 5, 70));
+
+        inventory.add(new Product(1001, "Paper Bags", 50, 500));
+        inventory.add(new FreshProduct(2001, "Milk", 450, 20, "2024-06-01", 4.0));
+        inventory.add(new PackagedProduct(3001, "Cereal Pack", 1200, 15, "BAR-998877"));
 
         boolean running = true;
         while (running) {
             displayMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline [cite: 521, 558]
+            scanner.nextLine();
 
             switch (choice) {
-                case 1: addProduct(); break;
-                case 2: viewAllProducts(); break;
-                case 3: addCustomer(); break;
-                case 4: viewAllCustomers(); break;
-                case 0:
-                    System.out.println("Exiting... Goodbye! 👋");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice! Try again.");
+                case 1: addGeneralProduct(); break;
+                case 2: addFreshProduct(); break;
+                case 3: addPackagedProduct(); break;
+                case 4: viewAllInventory(); break;
+                case 5: demonstratePolymorphism(); break;
+                case 6: viewFreshProductsOnly(); break;
+                case 0: running = false; break;
+                default: System.out.println("Invalid choice.");
             }
         }
     }
 
-    // Step 4: Display Menu [cite: 564]
     private static void displayMenu() {
-        System.out.println("\n=== RESTAURANT MANAGEMENT SYSTEM ===");
-        System.out.println("1. Add Product");
-        System.out.println("2. View All Products");
-        System.out.println("3. Add Customer");
-        System.out.println("4. View All Customers");
+        System.out.println("\nGROCERY STORE INVENTORY SYSTEM");
+        System.out.println("1. Add General Product");
+        System.out.println("2. Add Fresh Product (Child 1)");
+        System.out.println("3. Add Packaged Product (Child 2)");
+        System.out.println("4. View All Inventory (Polymorphic)");
+        System.out.println("5. Run Quality Checks (Polymorphism Demo)");
+        System.out.println("6. View Fresh Products Only (Type Filter)");
         System.out.println("0. Exit");
-        System.out.print("Enter choice: ");
+        System.out.print("Choice: ");
     }
 
-    // Step 5: Add Entity methods [cite: 567, 585]
-    private static void addProduct() {
-        System.out.print("Enter Product ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter Name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter Price: ");
-        double price = scanner.nextDouble();
-        System.out.print("Enter Quantity: ");
-        int qty = scanner.nextInt();
-
-        products.add(new Product(id, name, price, qty));
-        System.out.println("Product added successfully! ✅");
+    private static void addGeneralProduct() {
+        System.out.print("ID: "); int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Name: "); String name = scanner.nextLine();
+        System.out.print("Price: "); double price = scanner.nextDouble();
+        System.out.print("Stock: "); int stock = scanner.nextInt();
+        inventory.add(new Product(id, name, price, stock));
+        System.out.println("General product added.");
     }
 
-    private static void addCustomer() {
-        System.out.print("Enter Customer ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter Name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter Membership Level: ");
-        int level = scanner.nextInt();
-        System.out.print("Enter Total Purchases: ");
-        int purchases = scanner.nextInt();
+    private static void addFreshProduct() {
+        System.out.print("ID: "); int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Name: "); String name = scanner.nextLine();
+        System.out.print("Price: "); double price = scanner.nextDouble();
+        System.out.print("Stock: "); int stock = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Expiration Date (YYYY-MM-DD): "); String date = scanner.nextLine();
+        System.out.print("Storage Temp: "); double temp = scanner.nextDouble();
 
-        customers.add(new Customer(id, name, level, purchases));
-        System.out.println("Customer added successfully! ✅");
+        inventory.add(new FreshProduct(id, name, price, stock, date, temp));
+        System.out.println("Fresh product added.");
     }
 
-    // Step 6: View Entity methods [cite: 575, 585]
-    private static void viewAllProducts() {
-        System.out.println("\n--- ALL PRODUCTS ---");
-        if (products.isEmpty()) System.out.println("No products found.");
-        for (Product p : products) System.out.println(p);
+    private static void addPackagedProduct() {
+        System.out.print("ID: "); int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Name: "); String name = scanner.nextLine();
+        System.out.print("Price: "); double price = scanner.nextDouble();
+        System.out.print("Stock: "); int stock = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Barcode: "); String barcode = scanner.nextLine();
+
+        inventory.add(new PackagedProduct(id, name, price, stock, barcode));
+        System.out.println("Packaged product added.");
     }
 
-    private static void viewAllCustomers() {
-        System.out.println("\n--- ALL CUSTOMERS ---");
-        if (customers.isEmpty()) System.out.println("No customers found.");
-        for (Customer c : customers) System.out.println(c);
+    private static void viewAllInventory() {
+        System.out.println("\nALL INVENTORY ITEMS:");
+        for (Product p : inventory) {
+            System.out.println(p);
+
+
+            if (p instanceof FreshProduct) {
+                FreshProduct fp = (FreshProduct) p;
+                if (fp.isHighlyPerishable()) System.out.println("-> ALERT: Keep in refrigerator!");
+            }
+        }
+    }
+
+    private static void demonstratePolymorphism() {
+        System.out.println("\nDEMONSTRATING POLYMORPHISM:");
+        for (Product p : inventory) {
+            p.performQualityCheck();
+        }
+    }
+
+    private static void viewFreshProductsOnly() {
+        System.out.println("\nFRESH PRODUCE FILTER:");
+        for (Product p : inventory) {
+            if (p instanceof FreshProduct) {
+                System.out.println(p.getName() + " (Stock: " + p.getStockQuantity() + ")");
+            }
+        }
     }
 }
