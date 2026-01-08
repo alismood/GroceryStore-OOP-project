@@ -1,62 +1,60 @@
 public class Customer {
-    private int custormerId;
+    private int customerId;
     private String name;
     private int membershipLevel;
     private int totalPurchases;
 
-    public Customer(int custormerId, String name, int membershipLevel, int totalPurchases){
-        this.custormerId = custormerId;
-        this.name = name;
-        this.membershipLevel = membershipLevel;
-        this.totalPurchases =  totalPurchases;
+    public Customer(int customerId, String name, int membershipLevel, int totalPurchases) {
+        setCustomerId(customerId);
+        setName(name);
+        setMembershipLevel(membershipLevel);
+        setTotalPurchases(totalPurchases);
     }
 
-    public Customer(){
-        this.custormerId = 0;
+    public Customer() {
+        this.customerId = 0;
         this.name = "unknown name";
         this.membershipLevel = 0;
-        this.totalPurchases =  0;
+        this.totalPurchases = 0;
     }
 
-    public int getCustormerId(){
-        return custormerId;
-    }
-    public String getName(){
-        return name;
-    }
-    public int getMembershipLevel(){
-        return membershipLevel;
-    }
-    public int getTotalPurchases(){
-        return totalPurchases;
+    // Getters
+    public int getCustomerId() { return customerId; }
+    public String getName() { return name; }
+    public int getMembershipLevel() { return membershipLevel; }
+    public int getTotalPurchases() { return totalPurchases; }
+
+    // Setters with validation
+    public void setCustomerId(int customerId) {
+        if (customerId > 0) this.customerId = customerId;
+        else this.customerId = 0;
     }
 
-    public void setCustormerId(int custormerId){
-        this.custormerId =custormerId;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setMembershipLevels(int membershipLevel){
-        this.membershipLevel = membershipLevel;
-    }
-    public void setTotalPurchases(int totalPurchases){
-        this.totalPurchases = totalPurchases;
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) this.name = name;
+        else System.out.println("Warning: Name cannot be empty!");
     }
 
-    public boolean isVIP(){
-        if (this.totalPurchases > 100)
-            return true;
-        else
-            return  false;
+    public void setMembershipLevel(int membershipLevel) {
+        this.membershipLevel = (membershipLevel >= 0) ? membershipLevel : 0;
     }
 
-    public void addPurchase(int number){
-        this.totalPurchases += number;
+    public void setTotalPurchases(int totalPurchases) {
+        this.totalPurchases = (totalPurchases >= 0) ? totalPurchases : 0;
+    }
+
+    public boolean isVIP() {
+        return this.totalPurchases > 100;
+    }
+
+    public void addPurchase(int amount) {
+        if (amount > 0) this.totalPurchases += amount;
     }
 
     @Override
-    public String toString(){
-        return "Customer{CustomerID=" + custormerId + ", Name=" + name + "Level=" + membershipLevel + "TotalPurchases=" + totalPurchases + "}";
+    public String toString() {
+        return "Customer{ID=" + customerId + ", Name=" + name +
+                ", Level=" + membershipLevel + ", TotalPurchases=" + totalPurchases +
+                ", VIP=" + isVIP() + "}";
     }
 }

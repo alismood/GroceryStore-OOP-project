@@ -1,67 +1,75 @@
 public class Product {
-    private int procutId;
+    private int productId;
     private String name;
     private int stockQuantity;
     private double price;
 
-
-    public Product(int procutId, String name, double price, int stockQuantity){
-        this.procutId = procutId;
-        this.name = name;
-        this.stockQuantity = stockQuantity;
-        this.price = price;
+    // Constructor calling setters for validation
+    public Product(int productId, String name, double price, int stockQuantity) {
+        setProductId(productId);
+        setName(name);
+        setPrice(price);
+        setStockQuantity(stockQuantity);
     }
 
-    public Product(){
-        this.procutId = 0;
+    public Product() {
+        this.productId = 0;
         this.name = "unknown item";
         this.stockQuantity = 0;
         this.price = 0;
     }
 
-    public int getProcutId(){
-        return procutId;
-    }
-    public String getName(){
-        return name;
-    }
-    public int getStockQuantity(){
-        return stockQuantity;
-    }
-    public double getPrice(){
-        return price;
+    // Getters
+    public int getProductId() { return productId; }
+    public String getName() { return name; }
+    public int getStockQuantity() { return stockQuantity; }
+    public double getPrice() { return price; }
+
+    // Setters with validation [cite: 337, 366]
+    public void setProductId(int productId) {
+        if (productId > 0) this.productId = productId;
+        else {
+            System.out.println("Warning: Product ID must be positive.");
+            this.productId = 0;
+        }
     }
 
-
-    public void setProcutId(int procutId){
-        this.procutId = procutId;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setStockQuantity(int stockQuantity){
-        this.stockQuantity = stockQuantity;
-    }
-    public  void setPrice(double price){
-        this.price = price;
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Warning: Name cannot be empty!");
+        }
     }
 
-
-    public boolean isInStock(){
-    if (this.stockQuantity > 0){
-        return true;
-    }
-    else return false;
-    }
-
-    public void restock(int number){
-        this.stockQuantity += number;
+    public void setStockQuantity(int stockQuantity) {
+        if (stockQuantity >= 0) this.stockQuantity = stockQuantity;
+        else {
+            System.out.println("Warning: Stock quantity cannot be negative.");
+            this.stockQuantity = 0;
+        }
     }
 
+    public void setPrice(double price) {
+        if (price >= 0) this.price = price;
+        else {
+            System.out.println("Warning: Price cannot be negative!");
+            this.price = 0;
+        }
+    }
 
+    public boolean isInStock() {
+        return this.stockQuantity > 0;
+    }
+
+    public void restock(int number) {
+        if (number > 0) this.stockQuantity += number;
+        else System.out.println("Restock amount must be positive.");
+    }
 
     @Override
-    public String  toString(){
-        return "Product{ProductID="+ procutId + ", Name="+ name + ", Price=" + price + ", StockQuantity=" + stockQuantity + ", IsInStock=" + isInStock() + "}";
+    public String toString() {
+        return "Product{ID=" + productId + ", Name=" + name + ", Price=" + price +
+                ", Stock=" + stockQuantity + ", InStock=" + isInStock() + "}";
     }
 }

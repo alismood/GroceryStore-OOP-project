@@ -1,90 +1,89 @@
-import  java.util.ArrayList;
-void main() {
-    System.out.println("=== Restaurant Management System ===");
-    System.out.println();
-    Product pr1 = new Product(1, "Apple",2, 10);
-    Product pr2 = new Product();
-    Product pr3 = new Product(3, "Candy",5, 0);
+import java.util.ArrayList;
+import java.util.Scanner;
 
-    Sale sale1 = new  Sale();
-    Sale sale = new Sale(101, "Ali",2, "2025-10-12");
+public class Main {
+    private static ArrayList<Product> products = new ArrayList<>();
+    private static ArrayList<Customer> customers = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
-    Customer customer1 = new Customer(1, "Ali", 5, 70);
-    Customer customer2 = new Customer(2, "Ereke", 3, 101);
+    public static void main(String[] args) {
+        products.add(new Product(1, "Apple", 2.0, 50));
+        products.add(new Product(2, "Candy", 5.0, 10));
+        customers.add(new Customer(101, "Ali", 5, 70));
 
-    System.out.println("--- Products ---");
-    System.out.println(pr1);
-    System.out.println(pr2);
-    System.out.println(pr3);
-    System.out.println();
-    System.out.println("--- Sales ---");
-    System.out.println(sale);
-    System.out.println(sale1);
-    System.out.println();
-    System.out.println("--- CUSTOMERS ---");
-    System.out.println(customer1);
-    System.out.println(customer2);
-    System.out.println();
+        boolean running = true;
+        while (running) {
+            displayMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline [cite: 521, 558]
 
+            switch (choice) {
+                case 1: addProduct(); break;
+                case 2: viewAllProducts(); break;
+                case 3: addCustomer(); break;
+                case 4: viewAllCustomers(); break;
+                case 0:
+                    System.out.println("Exiting... Goodbye! 👋");
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
 
-    System.out.println("--- TESTING GETTERS ---");
-    System.out.println("Product name: " + pr1.getName());
-    System.out.println("Product price: " + pr3.getPrice() + " KZT");
-    System.out.println("Is custormer VIP: " + customer2.isVIP());
-    System.out.println("Customer level: " + customer1.getMembershipLevel());
-    System.out.println();
+    // Step 4: Display Menu [cite: 564]
+    private static void displayMenu() {
+        System.out.println("\n=== RESTAURANT MANAGEMENT SYSTEM ===");
+        System.out.println("1. Add Product");
+        System.out.println("2. View All Products");
+        System.out.println("3. Add Customer");
+        System.out.println("4. View All Customers");
+        System.out.println("0. Exit");
+        System.out.print("Enter choice: ");
+    }
 
-    System.out.println("--- TESTING SETTERS ---");
-    System.out.println("Updating product2...");
-    pr2.setProcutId(2);
-    pr2.setName("Kazy");
-    pr2.setPrice(4500.0);
-    pr2.setStockQuantity(10);
-    System.out.println("Updated: " + pr2);
-    System.out.println();
-    System.out.println("Changing sale1 customer...");
-    sale1.setCustomerName("Peter Parker");
-    sale1.setSaleId(2);
-    sale1.setDate("10-12-2025");
-    sale1.setTotalAmount(5);
-    System.out.println("Updated: " + sale1);
-    System.out.println();
+    // Step 5: Add Entity methods [cite: 567, 585]
+    private static void addProduct() {
+        System.out.print("Enter Product ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Price: ");
+        double price = scanner.nextDouble();
+        System.out.print("Enter Quantity: ");
+        int qty = scanner.nextInt();
 
-    System.out.println("--- TESTING PRODUCT METHODS ---");
-    System.out.println(pr3.getName() + " is in stock: " + pr3.isInStock());
-    System.out.println("Restocking " + pr3.getName());
-    pr3.restock(10);
-    System.out.println("New quantity: " + pr3.getStockQuantity());
-    System.out.println();
+        products.add(new Product(id, name, price, qty));
+        System.out.println("Product added successfully! ✅");
+    }
 
-    System.out.println("--- TESTING SALE METHODS ---");
-    System.out.println("Adding items to our list");
-    sale.addItem(pr1);
-    sale.addItem(pr3);
-    System.out.println("Total: " + sale.calculateTotal());
+    private static void addCustomer() {
+        System.out.print("Enter Customer ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Membership Level: ");
+        int level = scanner.nextInt();
+        System.out.print("Enter Total Purchases: ");
+        int purchases = scanner.nextInt();
 
-    System.out.println("--- TESTING CUSTOMER METHODS ---");
-    System.out.println(customer1.getName() + " is VIP: " + customer1.isVIP());
-    System.out.println(customer2.getName() + " is VIP: " + customer2.isVIP());
-    System.out.println();
-    System.out.println("Adding 60 purchases to " + customer1.getName());
-    customer1.addPurchase(60);
-    System.out.println(customer1.getName() + " purchases: " + customer1.getTotalPurchases());
-    System.out.println(customer1.getName() + " is VIP: " + customer1.isVIP());
-    System.out.println();
+        customers.add(new Customer(id, name, level, purchases));
+        System.out.println("Customer added successfully! ✅");
+    }
 
-    System.out.println("--- FINAL STATE ---");
-    System.out.println("Products:");
-    System.out.println(pr1);
-    System.out.println(pr2);
-    System.out.println(pr3);
-    System.out.println();
-    System.out.println("Sales:");
-    System.out.println(sale);
-    System.out.println(sale1);
-    System.out.println();
-    System.out.println("Customers:");
-    System.out.println(customer1);
-    System.out.println(customer2);
-    System.out.println("\n=== Program Complete ===");
+    // Step 6: View Entity methods [cite: 575, 585]
+    private static void viewAllProducts() {
+        System.out.println("\n--- ALL PRODUCTS ---");
+        if (products.isEmpty()) System.out.println("No products found.");
+        for (Product p : products) System.out.println(p);
+    }
+
+    private static void viewAllCustomers() {
+        System.out.println("\n--- ALL CUSTOMERS ---");
+        if (customers.isEmpty()) System.out.println("No customers found.");
+        for (Customer c : customers) System.out.println(c);
+    }
 }

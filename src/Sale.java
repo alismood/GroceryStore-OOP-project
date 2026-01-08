@@ -1,83 +1,51 @@
-import  java.util.ArrayList;
+import java.util.ArrayList;
+
 public class Sale {
     private int saleId;
     private String customerName;
-    private  int totalAmount;
-    private  String date;
+    private int totalAmount;
+    private String date;
     private ArrayList<Product> items;
 
+    public Sale(int saleId, String customerName, int totalAmount, String date) {
+        setSaleId(saleId);
+        setCustomerName(customerName);
+        setTotalAmount(totalAmount);
+        setDate(date);
+        this.items = new ArrayList<>();
+    }
 
-//    public Sale(int saleId, String customerName, int totalAmount, String date){
-//        this.saleId = saleId;
-//        this.customerName = customerName;
-//        this.totalAmount = totalAmount;
-//        this.date = date;
-//    }
-
-    public  Sale(){
+    public Sale() {
         this.saleId = 0;
-        this.customerName = "UnknowName";
+        this.customerName = "Unknown";
         this.totalAmount = 0;
-        this.date = "UnknowDate";
+        this.date = "Unknown";
+        this.items = new ArrayList<>();
     }
 
-    public int getSaleId(){
-        return saleId;
+    // Setters with validation
+    public void setSaleId(int saleId) { this.saleId = Math.max(saleId, 0); }
+    public void setCustomerName(String name) {
+        if (name != null && !name.trim().isEmpty()) this.customerName = name;
     }
-    public String getCustomerName(){
-        return customerName;
-    }
-    public int getTotalAmount(){
-        return totalAmount;
-    }
-    public String getDate(){
-        return date;
-    }
-
-    public void setSaleId(int saleId){
-        this.saleId = saleId;
-    }
-    public  void setCustomerName(String customerName){
-        this.customerName = customerName;
-    }
-    public void setTotalAmount(int totalAmount){
-        this.totalAmount = totalAmount;
-    }
-    public  void setDate(String date){
-        this.date = date;
-    }
-
-    public Sale(int saleId, String customerName,int totalAmount, String date) {
-        this.saleId = saleId;
-        this.customerName = customerName;
-        this.date = date;
-        this.totalAmount = totalAmount;
-        this.items = new ArrayList<>(); // ← IMPORTANT
+    public void setTotalAmount(int amount) { this.totalAmount = Math.max(amount, 0); }
+    public void setDate(String date) {
+        if (date != null && !date.trim().isEmpty()) this.date = date;
     }
 
     public void addItem(Product product) {
-        if (product.isInStock()) {
-            items.add(product);
-        } else {
-            System.out.println("Out of stock");
-        }
+        if (product.isInStock()) items.add(product);
+        else System.out.println("Item out of stock!");
     }
 
     public double calculateTotal() {
         double total = 0;
-        for (Product p : items) {
-            total += p.getPrice();
-        }
+        for (Product p : items) total += p.getPrice();
         return total;
     }
 
     @Override
-    public String toString(){
-        return "Sale{saleID=" + saleId + ", Name=" + customerName + ", Amount=" + totalAmount
-                + "}";
+    public String toString() {
+        return "Sale{ID=" + saleId + ", Customer=" + customerName + ", Amount=" + totalAmount + "}";
     }
-
 }
-//Fields: saleId, customerName, totalAmount,
-//date
-//Methods: addItem(), calculateTotal()
