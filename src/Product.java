@@ -19,18 +19,24 @@ public class Product {
 
     public void setPrice(double price) {
         if (price >= 0) this.price = price;
+        else{
+            System.out.println("Price cannot be negative");
+
+        }
     }
 
     public void setStockQuantity(int stockQuantity) {
         if (stockQuantity >= 0) this.stockQuantity = stockQuantity;
+        else{
+            System.out.println("Quantity cannot be negative");
+
+        }
     }
 
 
     public void performQualityCheck() {
         System.out.println("Performing standard quality check for product: " + name);
     }
-
-
     public String getCategory() {
         return "General Product";
     }
@@ -43,6 +49,6 @@ public class Product {
     @Override
     public String toString() {
         return "[" + getCategory() + "] ID: " + productId + ", Name: " + name +
-                ", Price: " + price + " KZT, Stock: " + stockQuantity;
+                ", Price: " + price + ", Stock: " + stockQuantity;
     }
 }

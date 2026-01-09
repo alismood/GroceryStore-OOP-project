@@ -5,14 +5,14 @@ public class Sale {
     private String customerName;
     private int totalAmount;
     private String date;
-    private ArrayList<Product> items;
+//    private ArrayList<Product> items;
 
     public Sale(int saleId, String customerName, int totalAmount, String date) {
         setSaleId(saleId);
         setCustomerName(customerName);
         setTotalAmount(totalAmount);
         setDate(date);
-        this.items = new ArrayList<>();
+//        this.items = new ArrayList<>();
     }
 
     public Sale() {
@@ -20,7 +20,7 @@ public class Sale {
         this.customerName = "Unknown";
         this.totalAmount = 0;
         this.date = "Unknown";
-        this.items = new ArrayList<>();
+//        this.items = new ArrayList<>();
     }
 
     public void setSaleId(int saleId) { this.saleId = Math.max(saleId, 0); }
@@ -32,19 +32,19 @@ public class Sale {
         if (date != null && !date.trim().isEmpty()) this.date = date;
     }
 
-//    public void addItem(Product product) {
-//        if (product.isInStock()) items.add(product);
-//        else System.out.println("Item out of stock!");
-//    }
 
-    public double calculateTotal() {
-        double total = 0;
-        for (Product p : items) total += p.getPrice();
-        return total;
-    }
+//    public double calculateTotal() {
+//        double total = 0;
+//        for (Product p : items) total += p.getPrice();
+//        return total;
+//    }
 
     @Override
     public String toString() {
         return "Sale{ID=" + saleId + ", Customer=" + customerName + ", Amount=" + totalAmount + "}";
     }
 }
+//    public void addItem(Product product) {
+//        if (product.isInStock()) items.add(product);
+//        else System.out.println("Item out of stock!");
+//    }

@@ -2,8 +2,7 @@ public class FreshProduct extends Product {
     private String expirationDate;
     private double storageTemperature;
 
-    public FreshProduct(int productId, String name, double price, int stockQuantity,
-                        String expirationDate, double temperature) {
+    public FreshProduct(int productId, String name, double price, int stockQuantity, String expirationDate, double temperature) {
         super(productId, name, price, stockQuantity);
         this.expirationDate = expirationDate;
         this.storageTemperature = temperature;
@@ -25,12 +24,12 @@ public class FreshProduct extends Product {
     }
 
     public void applyEndOfDayDiscount() {
-        this.price = this.price * 0.70;
-        System.out.println("Price of " + name + " reduced for quick sale.");
+        this.price = this.price * 0.7;
+        System.out.println("Price of " + name + "reduced");
     }
 
     @Override
     public String toString() {
-        return super.toString() + " | Expires: " + expirationDate + " | Temp: " + storageTemperature + "C";
+        return super.toString() + " Expires: " + expirationDate + " Temp: " + storageTemperature + "C";
     }
 }

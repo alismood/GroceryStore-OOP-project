@@ -8,9 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        inventory.add(new Product(1001, "Paper Bags", 50, 500));
-        inventory.add(new FreshProduct(2001, "Milk", 450, 20, "2024-06-01", 4.0));
-        inventory.add(new PackagedProduct(3001, "Cereal Pack", 1200, 15, "BAR-998877"));
+        inventory.add(new Product(1, "Bags", 50, 500));
+        inventory.add(new FreshProduct(2, "Milk", 677, 67, "2024-06-01", 4.0));
+        inventory.add(new PackagedProduct(3, "Cereal Pack", 1200, 15, "BAR-998877"));
 
         boolean running = true;
         while (running) {
@@ -34,11 +34,11 @@ public class Main {
     private static void displayMenu() {
         System.out.println("\nGROCERY STORE INVENTORY SYSTEM");
         System.out.println("1. Add General Product");
-        System.out.println("2. Add Fresh Product (Child 1)");
-        System.out.println("3. Add Packaged Product (Child 2)");
-        System.out.println("4. View All Inventory (Polymorphic)");
-        System.out.println("5. Run Quality Checks (Polymorphism Demo)");
-        System.out.println("6. View Fresh Products Only (Type Filter)");
+        System.out.println("2. Add Fresh Product");
+        System.out.println("3. Add Packaged Product");
+        System.out.println("4. View Inventory");
+        System.out.println("5. Run Quality Checks");
+        System.out.println("6. View Fresh Products Only");
         System.out.println("0. Exit");
         System.out.print("Choice: ");
     }
@@ -83,7 +83,8 @@ public class Main {
 
             if (p instanceof FreshProduct) {
                 FreshProduct fp = (FreshProduct) p;
-                if (fp.isHighlyPerishable()) System.out.println("-> ALERT: Keep in refrigerator!");
+                if (fp.isHighlyPerishable())
+                    System.out.println("ALERT: Keep in refrigerator!");
             }
         }
     }
@@ -99,7 +100,7 @@ public class Main {
         System.out.println("\nFRESH PRODUCE FILTER:");
         for (Product p : inventory) {
             if (p instanceof FreshProduct) {
-                System.out.println(p.getName() + " (Stock: " + p.getStockQuantity() + ")");
+                System.out.println(p);
             }
         }
     }
