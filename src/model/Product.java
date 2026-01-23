@@ -1,4 +1,6 @@
-public class Product {
+package model;
+
+public abstract class Product {
     protected int productId;
     protected String name;
     protected int stockQuantity;
@@ -6,7 +8,7 @@ public class Product {
 
     public Product(int productId, String name, double price, int stockQuantity) {
         this.productId = productId;
-        this.name = name;
+        setName(name);
         setPrice(price);
         setStockQuantity(stockQuantity);
     }
@@ -20,31 +22,36 @@ public class Product {
     public void setPrice(double price) {
         if (price >= 0) this.price = price;
         else{
-            System.out.println("Price cannot be negative");
-
+            throw new IllegalArgumentException("Price cannot be negative");
         }
     }
 
     public void setStockQuantity(int stockQuantity) {
         if (stockQuantity >= 0) this.stockQuantity = stockQuantity;
         else{
-            System.out.println("Quantity cannot be negative");
-
+            throw new IllegalArgumentException("Quantity cannot be negative");
         }
     }
 
-
-    public void performQualityCheck() {
-        System.out.println("Performing standard quality check for product: " + name);
+    public void setName(String name){
+        if (name == null || name.trim().isEmpty()){
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        else {
+            this.name = name;
+        }
     }
-    public String getCategory() {
-        return "General Product";
+//Concrrete emthod
+    public void displayInfo(){
+        System.out.println("ID: " + productId);
+        System.out.println("Name: " + name);
+        System.out.println("Quantity: " + stockQuantity);
+        System.out.println("Price: " + price + "KZT");
     }
 
-
-    public boolean needsRestock() {
-        return stockQuantity < 10;
-    }
+//Abstract method
+    public abstract String getCategory();
+    public abstract void needsRestock();
 
     @Override
     public String toString() {

@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+package model;
 
 public class Sale {
     private int saleId;
     private String customerName;
     private int totalAmount;
     private String date;
-//    private ArrayList<Product> items;
+//    private ArrayList<model.Product> items;
 
     public Sale(int saleId, String customerName, int totalAmount, String date) {
         setSaleId(saleId);
@@ -35,16 +35,16 @@ public class Sale {
 
 //    public double calculateTotal() {
 //        double total = 0;
-//        for (Product p : items) total += p.getPrice();
+//        for (model.Product p : items) total += p.getPrice();
 //        return total;
 //    }
 
     @Override
     public String toString() {
-        return "Sale{ID=" + saleId + ", Customer=" + customerName + ", Amount=" + totalAmount + "}";
+        return "model.Sale{ID=" + saleId + ", model.Customer=" + customerName + ", Amount=" + totalAmount + "}";
     }
 }
-//    public void addItem(Product product) {
+//    public void addItem(model.Product product) {
 //        if (product.isInStock()) items.add(product);
 //        else System.out.println("Item out of stock!");
 //    }
