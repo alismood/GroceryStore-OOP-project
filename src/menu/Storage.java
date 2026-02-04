@@ -1,17 +1,20 @@
 package menu;
 
+import database.ProductDAO;
 import model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
-
+import database.*;
 public class Storage implements Menu {
     private ArrayList<Product> inventory;
     private Scanner scanner;
+    private ProductDAO productDAO;
 
     public Storage() {
         this.inventory = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        this.productDAO = new ProductDAO();
 
         //Test data
         try {
@@ -27,10 +30,10 @@ public class Storage implements Menu {
         System.out.println("\n========================================");
         System.out.println("      GROCERY STORE INVENTORY SYSTEM");
         System.out.println("========================================");
-        System.out.println("1. Add Fresh Product");
+        System.out.println("1. Add Fresh Product(week 7-8 assignment");
         System.out.println("2. Add Packaged Product");
         System.out.println("3. View All Inventory");
-        System.out.println("4. View Fresh Products Only");
+        System.out.println("4. View Fresh Products Only(week 7-8 assignment");
         System.out.println("5. Run Quality Checks (Polymorphism)");
         System.out.println("0. Exit");
         System.out.println("========================================");
@@ -79,8 +82,10 @@ public class Storage implements Menu {
             System.out.print("Expiration Date (YYYY-MM-DD): "); String date = scanner.nextLine();
             System.out.print("Storage Temp: "); double temp = scanner.nextDouble();
 
-            inventory.add(new FreshProduct(id, name, price, stock, date, temp));
-            System.out.println("Fresh product added successfully!");
+
+
+            FreshProduct freshProduct = new FreshProduct(id, name, price, stock, date, temp);
+            productDAO.insertFreshProduct(freshProduct);
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input format!");
             scanner.nextLine();
@@ -130,6 +135,7 @@ public class Storage implements Menu {
             if (p instanceof FreshProduct) {
                 System.out.println(p);
                 found = true;
+                productDAO.getAllFreshProduct();
             }
         }
         if (!found) System.out.println("No fresh products found.");
@@ -142,8 +148,6 @@ public class Storage implements Menu {
             return;
         }
         for (Product p : inventory) {
-            // Assuming your Product class has a checkQuality() or toString()
-            // that is overridden in subclasses
             System.out.println("Checking " + p.getName() + ": " + p.toString());
         }
         System.out.println("Quality check complete.");
